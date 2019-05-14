@@ -14,7 +14,7 @@
             {{ recipe.created_at }}
             - Rate: {{ recipe.average_rate }}/5 ({{ recipe.vote_count }} Vote{{ recipe.vote_count|pluralize }})
             - {{ recipe.likes_count }} like{{ recipe.likes_count|pluralize }} - by {{ recipe.author_name }}
-            {% if recipe.author == request.user or request.user.is_staff %}- <a href="#">Edit</a>{% endif %}
+            {% if recipe.author == request.user or request.user.is_staff %}- <a href="{% url 'update_recipe' slug=recipe.slug %}">Edit</a>{% endif %}
             {% if request.user.is_staff %}- <a href="{% url 'delete_recipe' slug=recipe.slug %}">Delete</a>{% endif %}
         </p>
       </div>

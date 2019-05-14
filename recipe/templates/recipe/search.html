@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+{% block content %}
+<!-- Post Content Column -->
+<div class="col-lg-12 mt-4">
+    <h2>Name Search</h2>
+    {% if named_recipes %}
+        <div class="row">
+            {% for recipe in named_recipes %}
+                <div class="col-md-4">
+                    <div class="card mb-3">
+                        <a href="{% url 'detail_recipe' slug=recipe.slug %}" class="title-url">
+                            <h5 class="card-title m-3">{{ recipe }}</h5>
+                            <img class="img-fluid rounded card-img-top img-list" src="{{ recipe.image.url }}" alt="">
+                        </a>
+                        <div class="card-body">
+                            <p class="card-text">{{ recipe.description|truncatechars:100 }}</p>
+                            <p>
+                                {{ recipe.created_at }}
+                                - Rate: {{ recipe.average_rate }}/5 ({{ recipe.vote_count }} Vote{{ recipe.vote_count|pluralize }})
+                                - {{ recipe.likes_count }} like{{ recipe.likes_count|pluralize }} - by {{ recipe.author_name }}
+                                {% if recipe.author == request.user or request.user.is_staff %}- <a href="{% url 'update_recipe' slug=recipe.slug %}">Edit</a>{% endif %}
+                                {% if request.user.is_staff %}- <a href="{% url 'delete_recipe' slug=recipe.slug %}">Delete</a>{% endif %}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        No Match
+    {% endif %}
+    <hr/>
+</div>
+<div class="col-lg-12 mt-4">
+    <h2>Ingredient Search</h2>
+    {% if ingredient_recipes %}
+        <div class="row">
+            {% for recipe in ingredient_recipes %}
+                <div class="col-md-4">
+                    <div class="card mb-3">
+                        <a href="{% url 'detail_recipe' slug=recipe.slug %}" class="title-url">
+                            <h5 class="card-title m-3">{{ recipe }}</h5>
+                            <img class="img-fluid rounded card-img-top img-list" src="{{ recipe.image.url }}" alt="">
+                        </a>
+                        <div class="card-body">
+                            <p class="card-text">{{ recipe.description|truncatechars:100 }}</p>
+                            <p>
+                                {{ recipe.created_at }}
+                                - Rate: {{ recipe.average_rate }}/5 ({{ recipe.vote_count }} Vote{{ recipe.vote_count|pluralize }})
+                                - {{ recipe.likes_count }} like{{ recipe.likes_count|pluralize }} - by {{ recipe.author_name }}
+                                {% if recipe.author == request.user or request.user.is_staff %}- <a href="{% url 'update_recipe' slug=recipe.slug %}">Edit</a>{% endif %}
+                                {% if request.user.is_staff %}- <a href="{% url 'delete_recipe' slug=recipe.slug %}">Delete</a>{% endif %}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        No Match
+    {% endif %}
+    <hr/>
+</div>
+<div class="col-lg-12 mt-4">
+    <h2>Description Search</h2>
+    {% if description_recipes %}
+        <div class="row">
+            {% for recipe in description_recipes %}
+                <div class="col-md-4">
+                    <div class="card mb-3">
+                        <a href="{% url 'detail_recipe' slug=recipe.slug %}" class="title-url">
+                            <h5 class="card-title m-3">{{ recipe }}</h5>
+                            <img class="img-fluid rounded card-img-top img-list" src="{{ recipe.image.url }}" alt="">
+                        </a>
+                        <div class="card-body">
+                            <p class="card-text">{{ recipe.description|truncatechars:100 }}</p>
+                            <p>
+                                {{ recipe.created_at }}
+                                - Rate: {{ recipe.average_rate }}/5 ({{ recipe.vote_count }} Vote{{ recipe.vote_count|pluralize }})
+                                - {{ recipe.likes_count }} like{{ recipe.likes_count|pluralize }} - by {{ recipe.author_name }}
+                                {% if recipe.author == request.user or request.user.is_staff %}- <a href="{% url 'update_recipe' slug=recipe.slug %}">Edit</a>{% endif %}
+                                {% if request.user.is_staff %}- <a href="{% url 'delete_recipe' slug=recipe.slug %}">Delete</a>{% endif %}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        No Match
+    {% endif %}
+    <hr/>
+</div>
+{% endblock %}
+{% block sidebar %}{% endblock %}

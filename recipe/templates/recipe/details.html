@@ -11,7 +11,7 @@
             {{ object.created_at }}
             - Rate: {{ object.average_rate }}/5 ({{ object.vote_count }} Vote{{ object.vote_count|pluralize }})
             - {{ object.likes_count }} like{{ object.likes_count|pluralize }} - by {{ object.author_name }}
-            {% if object.author == request.user or request.user.is_staff %}- <a href="#">Edit</a>{% endif %}
+            {% if object.author == request.user or request.user.is_staff %}- <a href="{% url 'update_recipe' slug=object.slug %}">Edit</a>{% endif %}
             {% if request.user.is_staff %}- <a href="{% url 'delete_recipe' slug=object.slug %}">Delete</a>{% endif %}
         </p>
       </div>

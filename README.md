@@ -11,3 +11,16 @@ Recipes Website
  - Setup the database: `python manage.py migrate`
  - Add admin user: `python manage.py createsuperuser`
  - Run server: `python manage.py runserver`
+
+## Database
+
+Project uses MySQL in PythonAnywhere
+
+ - Install mysql client: `pip install mysqlclient`
+ - Set database settings in the `local_settings.py` file:
+   - `ENGINE: django.db.backends.mysql`
+   - `NAME: chefcraft`
+   - `USER: <db_user>`
+   - `PASSWORD: <db_password>`
+   - `HOST: <mysql_host>`
+   - `PORT: 3306`
