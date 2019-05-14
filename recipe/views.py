@@ -1,6 +1,7 @@
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
 from django.utils.text import slugify
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.conf import settings
 from django.db.models import Count
 from django.urls import reverse_lazy
 from recipe.models import Recipe, Ingredient
@@ -10,6 +11,7 @@ from recipe.forms import RecipeForm
 class RecipeList(ListView):
     queryset = Recipe.objects.filter(is_published=True)
     template_name = 'recipe/list.html'
+    paginate_by = settings.PAGINATION_LIMIT
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -104,3 +106,14 @@ class RecipeSearch(ListView):
         context['search_keywords'] = self.request.GET.get('q', 'Search for ingredients, names, descriptions')
         return context
 
+
+class IngredientDetail(DetailView):
+    model = Ingredient
+    template_name = 'recipe/ingredient_details.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['ingredients'] = Ingredient.objects.annotate(
+            total_recipes=Count('recipes')
+        ).order_by('-total_recipes')[:6]
+        return context

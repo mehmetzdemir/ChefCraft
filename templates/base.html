@@ -34,7 +34,7 @@
                 {% if request.user.is_anonymous %}
                 <a href="{% url 'login' %}" class="btn btn-outline-success my-2 my-sm-0">Log in</a>
                 {% else %}
-                <a href="{% url 'logout' %}" class="btn btn-outline-danger my-2 my-sm-0">Log out</a>
+                <button class="btn btn-dark">({{ request.user.username }})</button> <a href="{% url 'logout' %}" class="btn btn-outline-danger my-2 my-sm-0">Log out</a>
                 {% endif %}
             </form>
         </div>

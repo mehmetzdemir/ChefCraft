@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
-{% block title %}Recipes{% endblock %}
+{% block title %}Recipes with {{ object }}{% endblock %}
 {% block content %}
 <!-- Post Content Column -->
 <div class="col-lg-8 mt-4">
-    {% for recipe in object_list %}
+    {% for recipe in object.published_recipes %}
     <div class="card mb-3">
         <a href="{% url 'detail_recipe' slug=recipe.slug %}" class="title-url">
           <h5 class="card-title m-3">{{ recipe }}</h5>
@@ -21,21 +21,6 @@
       </div>
     </div>
     {% endfor %}
-    {% if is_paginated %}
-        <div class="pagination mb-3">
-            <span class="page-links">
-                {% if page_obj.has_previous %}
-                    <a href="{% url 'index' %}?page={{ page_obj.previous_page_number }}" class="btn btn-outline-dark">Previous Page</a>
-                {% endif %}
-                {% if page_obj.has_next %}
-                    <a href="{% url 'index' %}?page={{ page_obj.next_page_number }}" class="btn btn-outline-dark">Next Page</a>
-                {% endif %}
-            </span><hr/>
-            <span class="page-current">
-                Page {{ page_obj.number }}/{{ page_obj.paginator.num_pages }}. Total {{ page_obj.paginator.count }}
-            </span>
-        </div>
-    {% endif %}
 </div>
 {% endblock %}
 {% block ingredients-sidebar %}

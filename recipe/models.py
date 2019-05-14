@@ -20,6 +20,10 @@ class Ingredient(models.Model):
     def recipe_count(self):
         return self.recipes.filter(is_published=True).count()
 
+    @property
+    def published_recipes(self):
+        return self.recipes.filter(is_published=True)
+
     class Meta:
         ordering = ('name',)
 
