@@ -1,4 +1,6 @@
 from django.db import models
+from django.db.models import Avg
+from django.utils.text import slugify
 from django.contrib.auth import get_user_model
 
 
@@ -33,7 +35,7 @@ class Recipe(models.Model):
     )
 
     name = models.CharField(max_length=200)
-    slug = models.SlugField(max_length=50)
+    slug = models.SlugField(max_length=50, unique=True)
     image = models.ImageField(upload_to=recipes_directory_path)
     description = models.TextField()
     difficulty = models.IntegerField(choices=DIFFICULTY_CHOICES, default=EASY)
@@ -44,8 +46,35 @@ class Recipe(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    def save(self, *args, **kwargs):
+        if not self.slug and self.name:
+            self.slug = slugify(self.name)
+        super(Recipe, self).save(*args, **kwargs)
+
     def __str__(self):
         return self.name
+
+    @property
+    def likes_count(self) -> int:
+        return self.likes.count()
+
+    @property
+    def average_rate(self) -> float:
+        rate = self.rates.aggregate(avg_rate=Avg('point'))['avg_rate']
+        if not rate:
+            return 0
+        return rate
+
+    @property
+    def vote_count(self) -> int:
+        return self.rates.count()
+
+    @property
+    def author_name(self) -> str:
+        name = self.author.get_full_name()
+        if name:
+            return name
+        return self.author.username
 
     class Meta:
         ordering = ('-created_at',)
@@ -57,7 +86,7 @@ class Like(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.pk
+        return str(self.pk)
 
     class Meta:
         ordering = ('user', '-created_at')
@@ -78,7 +107,7 @@ class Rate(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.pk
+        return str(self.pk)
 
     class Meta:
         ordering = ('user', '-created_at')

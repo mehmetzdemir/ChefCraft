@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block content %}
+<!-- Post Content Column -->
+<div class="col-lg-8 mt-4">
+    <div class="card mb-3">
+      <h5 class="card-title m-3">{{ object }}</h5>
+      <img class="img-fluid rounded card-img-top img-list" src="{{ object.image.url }}" alt="">
+      <div class="card-body">
+        <p class="card-text">{{ object.description|linebreaks }}</p>
+        <p>
+            {{ object.created_at }}
+            - Rate: {{ object.average_rate }}/5 ({{ object.vote_count }} Vote{{ object.vote_count|pluralize }})
+            - {{ object.likes_count }} like{{ object.likes_count|pluralize }} - by {{ object.author_name }}
+            {% if object.author == request.user or request.user.is_staff %}- <a href="#">Edit</a>{% endif %}
+            {% if request.user.is_staff %}- <a href="{% url 'delete_recipe' slug=object.slug %}">Delete</a>{% endif %}
+        </p>
+      </div>
+    </div>
+</div>
+{% endblock %}
+{% block ingredients-sidebar %}
+<div class="card my-4">
+    <h5 class="card-header">Top User Ingredients</h5>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-lg-6">
+                <ul class="mb-0">
+                    {% for ingredient in ingredients %}
+                        <li><a href="#">{{ ingredient }} ({{ ingredient.recipe_count }})</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

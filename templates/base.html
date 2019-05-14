@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Blog Post - Start Bootstrap Template</title>
+
+    <link href="{% static "css/bootstrap.min.css" %}" rel="stylesheet">
+    <link href="{% static "css/main.css" %}" rel="stylesheet">
+
+</head>
+
+<body>
+
+<!-- Navigation -->
+<header>
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+        <a class="navbar-brand" href="{% url 'index' %}">Recipes.com</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'share_recipe' %}">Share a Recipes <span class="sr-only">(current)</span></a>
+                </li>
+
+            </ul>
+            <form class="form-inline mt-2 mt-md-0">
+
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Log in</button>
+            </form>
+        </div>
+    </nav>
+</header>
+
+<!-- Page Content -->
+{% block container %}
+    <div class="container">
+        <div class="row">
+            {% block content %}{% endblock %}
+            {% block sidebar %}
+                <!-- Sidebar Widgets Column -->
+                <div class="col-md-4">
+
+                    <!-- Search Widget -->
+                    <div class="card my-4">
+                        <h5 class="card-header">Search</h5>
+                        <div class="card-body">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="ingredients, dish, keyword...">
+                                <span class="input-group-btn">
+                            </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Categories Widget -->
+                    {% block ingredients-sidebar %}{% endblock %}
+
+                    <!-- Side Widget -->
+                </div>
+            {% endblock %}
+        </div>
+    </div>
+{% endblock %}
+<!-- /.container -->
+
+<!-- Footer -->
+<footer class="py-5 bg-dark">
+    <div class="container">
+        <p class="m-0 text-center text-white"> &copy; Mehmet OZDEMIR 2019</p>
+    </div>
+    <!-- /.container -->
+</footer>
+
+<script src="{% static "js/jquery.min.js" %}"></script>
+<script src="{% static "js/bootstrap.bundle.min.js" %}"></script>
+</body>
+</html>

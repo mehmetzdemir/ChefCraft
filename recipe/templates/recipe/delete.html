@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block container %}
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12 mt-4 mb-4">
+            Are you sure you want to delete recipe for {{ object }}?
+            <form method="post">{% csrf_token %}
+                {{ form.as_p }}
+                <input type="submit" class="btn btn-danger" value="Delete" />
+                <input onclick="window.history.go(-1); return false;" type="button" class="btn btn-warning" value="Cancel" />
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

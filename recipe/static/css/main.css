@@ -1,0 +1,19 @@
+body {
+  padding-top: 56px;
+}
+.img-list {
+  width: 900px;
+  height: auto;
+}
+.title-url {
+  color: #1d2124;
+}
+.title-url:hover {
+  color: #343a40;
+}
+.title-url:visited {
+  color: #a41515;
+}
+.title-url:active {
+  color: #343a40;
+}
