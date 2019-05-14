@@ -1,10 +1,13 @@
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
 from django.utils.text import slugify
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
 from django.conf import settings
+from django.http import Http404
 from django.db.models import Count
 from django.urls import reverse_lazy
-from recipe.models import Recipe, Ingredient
+from django.shortcuts import redirect
+from recipe.models import Recipe, Ingredient, Like, Rate
 from recipe.forms import RecipeForm
 
 
@@ -117,3 +120,31 @@ class IngredientDetail(DetailView):
             total_recipes=Count('recipes')
         ).order_by('-total_recipes')[:6]
         return context
+
+
+@login_required
+def like_view(request, recipe_slug):
+    try:
+        recipe = Recipe.objects.get(slug=recipe_slug)
+    except Recipe.DoesNotExist:
+        raise Http404("Recipe not found!")
+    Like.objects.get_or_create(user=request.user, recipe=recipe)
+    return redirect('detail_recipe', slug=recipe.slug)
+
+
+@login_required
+def rate_view(request, recipe_slug):
+    try:
+        recipe = Recipe.objects.get(slug=recipe_slug)
+    except Recipe.DoesNotExist:
+        raise Http404("Recipe not found!")
+    point = request.POST.get('point', None)
+    if point:
+        try:
+            point = int(point)
+            rate, _ = Rate.objects.get_or_create(user=request.user, recipe=recipe)
+            rate.point = point
+            rate.save()
+        except ValueError:
+            pass
+    return redirect('detail_recipe', slug=recipe.slug)

@@ -7,11 +7,45 @@
       <h5 class="card-title m-3">{{ object }}</h5>
       <img class="img-fluid rounded card-img-top img-list" src="{{ object.image.url }}" alt="">
       <div class="card-body">
+
+        <p class="card-text">
+          <form method="post" action="{% url 'like_recipe' recipe_slug=object.slug %}">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-dark">Like ({{ object.likes_count }})</button>
+          </form>
+        </p>
+
+        <p class="card-title"><b>Ingredients</b></p>
+        <p class="card-text">
+            <ul>
+            {% for ingredient in object.ingredients.all %}
+                <li>{{ ingredient }}</li>
+            {% endfor %}
+            </ul>
+        </p>
+
+        <p class="card-title"><b>Description</b></p>
         <p class="card-text">{{ object.description|linebreaks }}</p>
+
+        <p class="card-text">
+            <form method="post" action="{% url 'rate_recipe' recipe_slug=object.slug %}">
+            {% csrf_token %}
+                <select name="point">
+                    <option value="0">Vomiting</option>
+                    <option value="1">Very Bad</option>
+                    <option value="2">Bad</option>
+                    <option value="3">Medium</option>
+                    <option value="4">Good</option>
+                    <option value="5">Excellent</option>
+                </select>
+                <button type="submit" class="btn btn-primary" value="Rate">Rate</button>
+            </form>
+        </p>
+
         <p>
             {{ object.created_at }}
             - Rate: {{ object.average_rate }}/5 ({{ object.vote_count }} Vote{{ object.vote_count|pluralize }})
-            - {{ object.likes_count }} like{{ object.likes_count|pluralize }} - by {{ object.author_name }}
+            - by {{ object.author_name }}
             {% if object.author == request.user or request.user.is_staff %}- <a href="{% url 'update_recipe' slug=object.slug %}">Edit</a>{% endif %}
             {% if request.user.is_staff %}- <a href="{% url 'delete_recipe' slug=object.slug %}">Delete</a>{% endif %}
         </p>

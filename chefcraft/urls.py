@@ -3,7 +3,8 @@ from django.conf import settings
 from django.views.static import serve
 from django.urls import path
 from recipe.views import (
-    RecipeList, RecipeCreate, RecipeDelete, RecipeDetail, RecipeUpdate, RecipeSearch, IngredientDetail
+    RecipeList, RecipeCreate, RecipeDelete, RecipeDetail, RecipeUpdate, RecipeSearch, IngredientDetail,
+    like_view, rate_view
 )
 from common.views import CommonLoginView, CommonLogoutView, CommonRegisterView
 
@@ -18,6 +19,8 @@ urlpatterns = [
     path('edit/<slug:slug>/', RecipeUpdate.as_view(), name='update_recipe'),
     path('search/', RecipeSearch.as_view(), name='search_recipe'),
     path('ingredient/<slug:slug>/', IngredientDetail.as_view(), name='ingredient_details'),
+    path('like/<slug:recipe_slug>/', like_view, name='like_recipe'),
+    path('rate/<slug:recipe_slug>/', rate_view, name='rate_recipe'),
     path('<slug:slug>/', RecipeDetail.as_view(), name='detail_recipe'),
     path('', RecipeList.as_view(), name='index'),
 ]
