@@ -25,6 +25,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'common',
     'recipe',
 ]
 
@@ -58,7 +59,10 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'chefcraft.wsgi.application'
 
-LOGOUT_REDIRECT_URL = "/"
+LOGIN_URL = '/login/'
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
+
 PAGINATION_LIMIT = 5
 FILE_UPLOAD_DIRECTORY_PERMISSIONS = 0o755
 FILE_UPLOAD_PERMISSIONS = 0o644

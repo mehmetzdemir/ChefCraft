@@ -1,7 +1,7 @@
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
 from django.utils.text import slugify
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.db.models import Count, Q
+from django.db.models import Count
 from django.urls import reverse_lazy
 from recipe.models import Recipe, Ingredient
 from recipe.forms import RecipeForm
@@ -101,4 +101,6 @@ class RecipeSearch(ListView):
             context['named_recipes'] = []
             context['ingredient_recipes'] = []
             context['description_recipes'] = []
+        context['search_keywords'] = self.request.GET.get('q', 'Search for ingredients, names, descriptions')
         return context
+

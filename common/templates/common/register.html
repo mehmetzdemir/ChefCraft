@@ -1,0 +1,51 @@
+<!doctype html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="Mehmet Ozdemir">
+    <title>ChefCraft Register</title>
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="{% static 'css/login.css' %}" rel="stylesheet">
+</head>
+<body class="text-center">
+<form class="form-signin" method="post">
+    {% csrf_token %}
+    <img class="mb-4" src="{% static 'img/chefhat.jpg' %}" alt="" width="72" height="72">
+    <h1 class="h3 mb-3 font-weight-normal">New User</h1>
+
+    {% if form.errors %}
+    {% for field in form %}
+        {% for error in field.errors %}
+            <div class="alert alert-danger">
+                <strong>{{ error|escape }}</strong>
+            </div>
+        {% endfor %}
+    {% endfor %}
+    {% for error in form.non_field_errors %}
+        <div class="alert alert-danger">
+            <strong>{{ error|escape }}</strong>
+        </div>
+    {% endfor %}
+    {% endif %}
+    <label for="id_username" class="sr-only">Username</label>
+    <input type="text" name="username" maxlength="150" autofocus required id="id_username" class="form-control" placeholder="Username">
+
+    <label for="id_email" class="sr-only">Email address</label>
+    <input type="email" name="email" maxlength="254" id="id_email" required class="form-control" placeholder="Email address">
+
+    <label for="id_password1" class="sr-only">Password</label>
+    <input type="password" name="password1" required id="id_password1" class="form-control" placeholder="Password">
+
+    <label for="id_password2" class="sr-only">Confirm Password</label>
+    <input type="password" name="password2" required id="id_password2" class="form-control" placeholder="Confirm Password">
+
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
+    <a href="{% url 'login' %}" type="button" class="btn btn-lg btn-success btn-block">Login</a>
+    <p class="mt-5 mb-3 text-muted">&copy; 2019 Mehmet Ozdemir</p>
+</form>
+</body>
+</html>

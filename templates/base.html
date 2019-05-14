@@ -4,10 +4,10 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <meta name="description" content="Have a nice dinner">
+    <meta name="author" content="Mehmet Ozdemir">
 
-    <title>Blog Post - Start Bootstrap Template</title>
+    <title>{% block title %}Main{% endblock %} - ChefCraft</title>
 
     <link href="{% static "css/bootstrap.min.css" %}" rel="stylesheet">
     <link href="{% static "css/main.css" %}" rel="stylesheet">
@@ -19,7 +19,7 @@
 <!-- Navigation -->
 <header>
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-        <a class="navbar-brand" href="{% url 'index' %}">Recipes.com</a>
+        <a class="navbar-brand" href="{% url 'index' %}">ChefCraft</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -31,8 +31,11 @@
 
             </ul>
             <form class="form-inline mt-2 mt-md-0">
-
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Log in</button>
+                {% if request.user.is_anonymous %}
+                <a href="{% url 'login' %}" class="btn btn-outline-success my-2 my-sm-0">Log in</a>
+                {% else %}
+                <a href="{% url 'logout' %}" class="btn btn-outline-danger my-2 my-sm-0">Log out</a>
+                {% endif %}
             </form>
         </div>
     </nav>

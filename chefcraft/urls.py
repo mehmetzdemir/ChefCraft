@@ -3,10 +3,14 @@ from django.conf import settings
 from django.views.static import serve
 from django.urls import path
 from recipe.views import RecipeList, RecipeCreate, RecipeDelete, RecipeDetail, RecipeUpdate, RecipeSearch
+from common.views import CommonLoginView, CommonLogoutView, CommonRegisterView
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('login/', CommonLoginView.as_view(), name='login'),
+    path('logout/', CommonLogoutView.as_view(), name='logout'),
+    path('register/', CommonRegisterView.as_view(), name='register'),
     path('share/', RecipeCreate.as_view(), name='share_recipe'),
     path('delete/<slug:slug>/', RecipeDelete.as_view(), name='delete_recipe'),
     path('edit/<slug:slug>/', RecipeUpdate.as_view(), name='update_recipe'),
